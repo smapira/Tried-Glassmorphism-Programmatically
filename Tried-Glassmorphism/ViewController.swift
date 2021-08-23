@@ -93,7 +93,7 @@ class TestDraw: UIView {
 			.reversing()
 		path.append(hole)
 		layer.shadowPath = path.cgPath		
-		
+
 		"Super !!".draw(at: CGPoint(x: 70, y: 100), withAttributes: [
 			NSAttributedString.Key.foregroundColor : UIColor.white,
 			NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 50),
@@ -124,7 +124,14 @@ class ViewController: UIViewController {
 					 paddingLeft: 50,
 					 width: 200,
 					 height: 100)
-		
+
+		let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+		let blurEffectView = UIVisualEffectView(effect: blurEffect)
+		blurEffectView.frame = glass1.bounds
+		blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		blurEffectView.alpha = 0.5
+		glass1.addSubview(blurEffectView)
+
 		let glass2 = TestDraw(frame: CGRect(x: 0, y: 0,
 											width: 100,
 											height: 100))
