@@ -10,7 +10,7 @@
 
 ## 🎥 See It Work
 
-<img width="584" alt="Screen-Shot" src="https://user-images.githubusercontent.com/25024587/130447267-bb4bd885-2e69-43cf-84dd-38984b16a03e.png">
+<img width="584" alt="Screen-Shot" src="https://github.com/smapira/Tried-Glassmorphism-Programmatically/blob/7c43c184ce294aad46e77efcfff3b6155b279ef9/Screen-Shot.png">
 
 ## 🧠 What I Learned
 
