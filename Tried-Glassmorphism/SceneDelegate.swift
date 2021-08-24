@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
-		window.rootViewController = ViewController()
+		window.rootViewController = createTabbar()
 		window.makeKeyAndVisible()
 		self.window = window
 	}
@@ -50,7 +50,68 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Use this method to save data, release shared resources, and store enough scene-specific state information
 		// to restore the scene back to its current state.
 	}
+	
+	private func createTabbar() -> UITabBarController {
+		let tabbarController = UITabBarController()
+		tabbarController.viewControllers = [createFirstViewController(),
+								  createSecondViewController()]
 
+		tabbarController.tabBar
+			.layer
+			.insertSublayer(createMask(tabBar: tabbarController.tabBar),
+							at: 0)
+		tabbarController.tabBar.itemPositioning = .centered
 
+		// remove tabBar background
+		tabbarController.tabBar.backgroundImage = UIImage()
+		tabbarController.tabBar.shadowImage = UIImage()
+		tabbarController.tabBar.isTranslucent = true
+		return tabbarController
+	}
+	
+	private func createFirstViewController() -> ViewController {
+		let viewController        = ViewController()
+		viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
+		return viewController
+	}
+	
+	private func createSecondViewController() -> ViewController {
+		let secondVC        = ViewController()
+		secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+		return secondVC
+	}
+	
+	private func createMask(tabBar: UITabBar) -> CAShapeLayer {
+		let rectanglePath = UIBezierPath(
+			roundedRect: CGRect(x: 30,
+								y: tabBar.bounds.minY,
+								width: tabBar.bounds.width - 60,
+								height: tabBar.bounds.height + 10),
+			cornerRadius: (tabBar.frame.width/2)).cgPath
+
+		let layer = CAShapeLayer()
+		layer.path = rectanglePath
+		layer.opacity = 0.3
+		layer.isHidden = false
+		layer.masksToBounds = false
+		layer.fillColor = UIColor.white.cgColor
+
+		// draw shadow
+		layer.shadowColor = UIColor.gray.cgColor
+		layer.shadowOffset = CGSize(width: 0, height: 0)
+		layer.shadowRadius = 3
+		layer.shadowOpacity = 1
+
+		// draw border
+		let borderLayer = CAShapeLayer()
+		borderLayer.path = rectanglePath
+		borderLayer.fillColor = UIColor.clear.cgColor
+		borderLayer.strokeColor = UIColor.white.cgColor
+		borderLayer.lineWidth = 0.5
+		borderLayer.frame = layer.frame
+		borderLayer.addSublayer(layer)
+		
+		return borderLayer
+	}
 }
 

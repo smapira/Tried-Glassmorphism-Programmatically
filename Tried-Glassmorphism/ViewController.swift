@@ -66,34 +66,40 @@ class TestDraw: UIView {
 	}
 
 	override func draw(_ rect: CGRect) {
+		let rectanglePath = UIBezierPath(roundedRect: rect,
+									 cornerRadius: 25).cgPath
+		// draw mask
 		let maskLayer = CAShapeLayer()
 		maskLayer.frame = rect
-		maskLayer.path = UIBezierPath(roundedRect: rect,
-									  cornerRadius: 25).cgPath
+		maskLayer.path = rectanglePath
 		layer.mask = maskLayer
+
+		// draw border
 		let borderLayer = CAShapeLayer()
-		borderLayer.path = maskLayer.path // Reuse the Bezier path
+		borderLayer.path = rectanglePath
 		borderLayer.fillColor = UIColor.clear.cgColor
 		borderLayer.strokeColor = UIColor.white.cgColor
 		borderLayer.lineWidth = 1
 		borderLayer.frame = rect
 		layer.addSublayer(borderLayer)
 
-		layer.shadowOpacity = 1
-		layer.shadowColor = UIColor.lightGray.cgColor
-		layer.shadowOffset = CGSize(width: 0, height: 0)
-		layer.shadowRadius = 3
-
-		let path = UIBezierPath(
+		// draw shadow
+		let shadowPath = UIBezierPath(
 			roundedRect: bounds.insetBy(dx: 0, dy: 0),
 			cornerRadius: 4)
+
 		let hole = UIBezierPath(
 			roundedRect: bounds.insetBy(dx: 2, dy: 2),
 			cornerRadius: 3)
 			.reversing()
-		path.append(hole)
-		layer.shadowPath = path.cgPath		
-
+		shadowPath.append(hole)
+		layer.shadowPath = shadowPath.cgPath
+		layer.shadowOpacity = 1
+		layer.shadowColor = UIColor.lightGray.cgColor
+		layer.shadowOffset = CGSize(width: 0, height: 0)
+		layer.shadowRadius = 3
+		
+		// draw text
 		"Super !!".draw(at: CGPoint(x: 70, y: 100), withAttributes: [
 			NSAttributedString.Key.foregroundColor : UIColor.white,
 			NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 50),
