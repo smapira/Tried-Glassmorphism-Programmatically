@@ -26,6 +26,7 @@ The project is availabe under MIT licence.
 - [UIBezierPath: How to add a border around a view with rounded corners? | stackoverflow ](https://stackoverflow.com/a/32032470/5517628)
 - [ Swift - Cut hole in shadow layer | stackoverflow ](https://stackoverflow.com/a/59092828/5517628)
 - [ Fakurian Design | Unsplash ](https://unsplash.com/photos/E8Ufcyxz514)
+- [ Creating a fully transparent UITabBar in Swift ](https://dev-georgegarcia.medium.com/creating-a-fully-transparent-uitabbar-in-swift-ae689f3e4c51 )
 
 
 
